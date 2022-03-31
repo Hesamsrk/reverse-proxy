@@ -8,13 +8,13 @@ export const services: ServiceConfigs[] = [
         protocol: "http"
     },
     {
-        name: "test1",
+        name: "test2",
         hostname: "localhost",
         port: 8002,
         protocol: "http"
     },
     {
-        name: "test1",
+        name: "test3",
         hostname: "localhost",
         port: 8003,
         protocol: "http"
