@@ -8,15 +8,9 @@ export const services: ServiceConfigs[] = [
         protocol: "http"
     },
     {
-        name: "test2",
-        hostname: "localhost",
-        port: 8002,
+        name: "httpbin",
+        hostname: "httpbin.org",
         protocol: "http"
     },
-    {
-        name: "test3",
-        hostname: "localhost",
-        port: 8003,
-        protocol: "http"
-    }
+
 ]
