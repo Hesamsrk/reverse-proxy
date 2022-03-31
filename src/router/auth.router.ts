@@ -1,20 +1,18 @@
 import express from "express";
-import {JWTPayload, LoginIT, LoginOT, SignupIT, SignupOT} from "../types/auth";
-import {PasswordEncoder, validateObject} from "../utils";
+import {JWTPayload, LoginIT, LoginOT, OT, SignupIT, SignupOT} from "../types/auth";
+import {PasswordCompare, PasswordEncoder, validateObject} from "../utils";
 import {User} from "../database/models/user.model";
 import {sign} from "jsonwebtoken"
 import {Config} from "../config";
-import {Authenticate} from "../utils/auth";
+import {Authenticate} from "../middlewares/Authenticate";
 
 export const authRouter = express.Router()
-
-authRouter.all("/", (req, res) => res.json("Auth!"))
 
 authRouter.post("/signup", async (req, res) => {
     let input: SignupIT = req.body
     let valRes = validateObject<SignupIT>(input, ["username", "password", "email"])
     if (!valRes.isValid) {
-        res.status(422).json(
+        return res.status(422).json(
             {
                 status: false,
                 error: {
@@ -23,7 +21,6 @@ authRouter.post("/signup", async (req, res) => {
                 }
             } as SignupOT
         )
-        return
     }
 
     const foundUser = await User.findOne({
@@ -33,7 +30,7 @@ authRouter.post("/signup", async (req, res) => {
     })
 
     if (foundUser) {
-        res.status(422).json(
+        return res.status(422).json(
             {
                 status: false,
                 error: {
@@ -42,7 +39,7 @@ authRouter.post("/signup", async (req, res) => {
                 }
             } as SignupOT
         )
-        return
+
     }
 
     const createdUser = await User.create({
@@ -53,7 +50,7 @@ authRouter.post("/signup", async (req, res) => {
         LastName: input.lastName || ""
     })
 
-    res.status(200).json(
+    return res.status(200).json(
         {
             status: true,
             body: {
@@ -70,7 +67,7 @@ authRouter.post("/login", async (req, res) => {
     let input: LoginIT = req.body
     let valRes = validateObject<LoginIT>(input, ["username", "password"])
     if (!valRes.isValid) {
-        res.status(422).json(
+        return res.status(422).json(
             {
                 status: false,
                 error: {
@@ -79,7 +76,7 @@ authRouter.post("/login", async (req, res) => {
                 }
             } as LoginOT
         )
-        return
+
     }
 
 
@@ -89,7 +86,7 @@ authRouter.post("/login", async (req, res) => {
         }
     })
     if (!foundUser) {
-        res.status(404).json(
+        return res.status(404).json(
             {
                 status: false,
                 error: {
@@ -98,11 +95,11 @@ authRouter.post("/login", async (req, res) => {
                 }
             } as LoginOT
         )
-        return
+
     }
-    const encodedPassword = PasswordEncoder(input.password)
-    if (foundUser.Password !== encodedPassword) {
-        res.status(401).json(
+
+    if (!PasswordCompare(foundUser.Password, input.password)) {
+        return res.status(401).json(
             {
                 status: false,
                 error: {
@@ -111,7 +108,6 @@ authRouter.post("/login", async (req, res) => {
                 }
             } as LoginOT
         )
-        return
     }
 
 
@@ -125,7 +121,7 @@ authRouter.post("/login", async (req, res) => {
     foundUser.Token = token
     await foundUser.save()
 
-    res.status(200).json(
+    return res.status(200).json(
         {
             status: true,
             body: {
@@ -135,7 +131,32 @@ authRouter.post("/login", async (req, res) => {
     )
 })
 
-Authenticate(authRouter, "/logout")
-authRouter.post("/logout", (req, res) => {
+authRouter
+    .use("/logout", Authenticate)
+    .delete("/logout", async (req, res) => {
+        const user: JWTPayload = res.locals.user
 
-})
+
+        const foundUser = await User.findOne({
+            where: {
+                ID: user.userID
+            }
+        })
+
+        if (!foundUser) {
+            res.status(404).json({
+                status: false,
+                error: {
+                    code: 404,
+                    message: "User not found!"
+                }
+            } as OT)
+        }
+
+        foundUser.Token = null
+        await foundUser.save()
+
+        return res.status(200).json({
+            status: true
+        } as OT)
+    })

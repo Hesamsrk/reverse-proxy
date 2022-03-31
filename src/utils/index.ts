@@ -2,6 +2,7 @@ import * as bcrypt from "bcrypt";
 
 export const PasswordEncoder = (password: string) => bcrypt.hashSync(password, 10)
 
+export const PasswordCompare = (hash: string, password: string) => bcrypt.compareSync(password, hash)
 
 export const validateObject = <T extends object>(object: T, keys: (keyof T)[]) => {
     const result = keys.map(key => {

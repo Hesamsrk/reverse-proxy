@@ -2,7 +2,10 @@ import {config} from "dotenv";
 
 config()
 
+
 export const Config = {
+    name: process.env.APP_NAME || "untitled",
+    hostname: process.env.DATABASE_HOST || "localhost",
     port: parseInt(process.env.PORT || "3000"),
     jwtSecret: process.env.JWT_SECRET || "",
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || "",

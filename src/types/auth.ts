@@ -1,4 +1,4 @@
-export interface OT<T extends object> {
+export interface OT<T extends object = null> {
     status: boolean
     body?: T
     error?: {
@@ -28,5 +28,6 @@ export interface JWTPayload {
     userID: number,
     username: string,
 }
+
 
 export type LoginOT = OT<{ token: string }>
