@@ -24,10 +24,12 @@ export interface LoginIT {
     password: string;
 }
 
+export type LoginOT = OT<{ token: string }>
+
+
 export interface JWTPayload {
     userID: number,
     username: string,
 }
 
 
-export type LoginOT = OT<{ token: string }>

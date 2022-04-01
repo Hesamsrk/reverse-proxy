@@ -28,7 +28,6 @@ export class User extends Model {
     @Column(DataTypes.TEXT)
     Token: string;
 
-
     @Column(DataTypes.STRING)
     FirstName: string;
 
