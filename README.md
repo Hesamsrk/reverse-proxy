@@ -17,6 +17,8 @@ and [http-proxy](https://www.npmjs.com/package/http-proxy)
 
 You can change the `services.config.ts` file to add new services or configure existing ones.
 
+- Using this config file you can register as many as applications you want the reverse proxy connect to:
+
 ```typescript
 import {ServiceConfigs} from "./src/types/service";
 
@@ -26,10 +28,17 @@ export const services: ServiceConfigs[] = [
         hostname: "httpbin.org",
         protocol: "http",
     },
+    {
+        name: "myApplication",
+        hostname: "localhost:3000",
+        protocol: "http",
+    },
 ];
 ```
 
-## How to run it?
+* As default, the only connected service is [httpbin](https://httpbin.org)
+
+## How to run this application?
 
 ### Recommended approach
 
@@ -86,3 +95,19 @@ npm install
 npm run syncdb
 npm start
 ```
+
+# How it works?
+
+- First import the `api-document.yaml` file to [insomnia](https://insomnia.rest/) or [postman](https://www.postman.com/)
+  .
+- There you can see the API end-points:
+    - Signup:
+      ![img.png](./images/signup.png)
+    - Login:
+      ![img.png](./images/login.png)
+    - Send request, and the reverse-proxy connects you to the target servers:
+        - JSON:
+          ![img.png](./images/json.png)
+        - HTML:
+          ![img.png](./images/html.png)
+``
