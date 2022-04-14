@@ -6,10 +6,12 @@ COPY package.json .
 
 RUN npm install
 
+ENV PORT 6969
 
-EXPOSE 6969
-
+EXPOSE $PORT
 
 COPY . .
+
+RUN npm run syncdb
 
 CMD [ "npm", "start"]

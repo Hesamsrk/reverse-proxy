@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  mydatabase:
+    image: 'mysql'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 13731378
+      MYSQL_DATABASE: reverseProxy
+  app:
+    build: .
+    depends_on:
+      - mydatabase
+    env_file: ./.env
+    ports:
+      - 6969:6969
+    expose:
+      - 6969
+    stdin_open: true
+    tty: true
