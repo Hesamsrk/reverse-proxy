@@ -7,10 +7,10 @@ export const services: ServiceConfigs[] = [
         protocol: "http",
         authentication: true
     },
-    {
-        name: "topicModeling",
-        hostname: "5.63.8.86:5001",
-        protocol: "http",
-        authentication: false
-    }
+    // {
+    //     name: "topicModeling",
+    //     hostname: "5.63.8.86:5001",
+    //     protocol: "http",
+    //     authentication: false
+    // }
 ]

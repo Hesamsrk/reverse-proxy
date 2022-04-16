@@ -1,11 +1,11 @@
 _type: export
 __export_format: 4
-__export_date: 2022-04-14T19:43:42.420Z
+__export_date: 2022-04-16T16:40:39.818Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
   - _id: req_8e1d5f042eb748568ce4c38f3eebe46c
     parentId: fld_f9d2bd1104b64051b2d16b470cc30d81
-    modified: 1649965124012
+    modified: 1650127203750
     created: 1648736163233
     url: "{{ _.BASE_URL }}/auth/logout"
     name: logout
@@ -50,7 +50,7 @@ resources:
     _type: workspace
   - _id: req_e8544109e08d4956aae0fe6a4a02ffdc
     parentId: fld_f9d2bd1104b64051b2d16b470cc30d81
-    modified: 1649965119558
+    modified: 1650127204205
     created: 1648678866046
     url: "{{ _.BASE_URL }}/auth/signup"
     name: signup
@@ -83,7 +83,7 @@ resources:
     _type: request
   - _id: req_55c9cdfd4164402988959b64017dfa66
     parentId: fld_f9d2bd1104b64051b2d16b470cc30d81
-    modified: 1649965121556
+    modified: 1650127204829
     created: 1648731069306
     url: "{{ _.BASE_URL }}/auth/login"
     name: login
@@ -143,8 +143,8 @@ resources:
     metaSortKey: -1648743842821
     _type: request_group
   - _id: req_3ef621330fdc4421b79f3e7a57822961
-    parentId: fld_05ea90c1e8a64a6c8f98d00070b912a9
-    modified: 1649965168975
+    parentId: fld_71508bbb0e274a4dbcf63655bc9650e4
+    modified: 1650127190533
     created: 1648746879310
     url: "{{ _.BASE_URL }}/proxy/httpbin/json"
     name: httpbin/json
@@ -165,6 +165,16 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
+  - _id: fld_71508bbb0e274a4dbcf63655bc9650e4
+    parentId: fld_05ea90c1e8a64a6c8f98d00070b912a9
+    modified: 1650127173045
+    created: 1650127173045
+    name: httpbin
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1650127173045
+    _type: request_group
   - _id: fld_05ea90c1e8a64a6c8f98d00070b912a9
     parentId: wrk_dc78c54d0bcc414c983fa22356950ca8
     modified: 1648744108693
@@ -176,8 +186,8 @@ resources:
     metaSortKey: -1648742767134
     _type: request_group
   - _id: req_f861548619014a0193a502c68ca486eb
-    parentId: fld_05ea90c1e8a64a6c8f98d00070b912a9
-    modified: 1649965168367
+    parentId: fld_71508bbb0e274a4dbcf63655bc9650e4
+    modified: 1650127191698
     created: 1649965158805
     url: "{{ _.BASE_URL }}/proxy/httpbin/html"
     name: httpbin/html
@@ -189,7 +199,7 @@ resources:
     authentication:
       type: bearer
       token: "{{ _.TOKEN }}"
-    metaSortKey: -1648336463429.875
+    metaSortKey: -1648469696601.75
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -200,7 +210,7 @@ resources:
     _type: request
   - _id: env_c3de07921ce35a1ecbdf2818f59cf8e316180397
     parentId: wrk_dc78c54d0bcc414c983fa22356950ca8
-    modified: 1648756248490
+    modified: 1650117042341
     created: 1648678854995
     name: Base Environment
     data:

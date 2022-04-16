@@ -5,7 +5,7 @@ import {Authenticate} from "../middlewares/Authenticate";
 
 export const proxyRouter = express.Router()
 
-const proxyServer = createProxyServer()
+const proxyServer = createProxyServer({timeout: 3000})
 
 
 for (const service of services) {
@@ -15,7 +15,7 @@ for (const service of services) {
     proxyRouter.use(`/${service.name}`, async (req, res) => {
         const target = `${service.protocol}://${service.hostname}${service.port ? `:${service.port}` : ""}`
         console.log(`proxy => ${target}`);
-        proxyServer.web(req, res, {target, timeout: 3000});
+        proxyServer.web(req, res, {target});
         proxyServer.on("error", (e) => {
             console.error(`Proxy to ${service.name} failed:`)
             console.error(e)
