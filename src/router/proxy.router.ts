@@ -1,6 +1,7 @@
 import express from "express";
 import {services} from "../../services.config"
 import {createProxyServer} from "http-proxy"
+import {Authenticate} from "../middlewares/Authenticate";
 
 export const proxyRouter = express.Router()
 
@@ -8,9 +9,17 @@ const proxyServer = createProxyServer()
 
 
 for (const service of services) {
+    if (service.authentication) {
+        proxyRouter.use(`/${service.name}`, Authenticate)
+    }
     proxyRouter.use(`/${service.name}`, async (req, res) => {
-        console.log(`redirecting to ${service.name}`);
-        proxyServer.web(req, res, {target: `${service.protocol}://${service.hostname}${service.port ? `:${service.port}` : ""}`});
+        const target = `${service.protocol}://${service.hostname}${service.port ? `:${service.port}` : ""}`
+        console.log(`proxy => ${target}`);
+        proxyServer.web(req, res, {target, timeout: 3000});
+        proxyServer.on("error", (e) => {
+            console.error(`Proxy to ${service.name} failed:`)
+            console.error(e)
+        })
     })
 }
 

@@ -14,9 +14,15 @@
     "start": "ts-node index.ts",
     "syncdb": "ts-node index.ts --sync-db",
     "syncdb:force": "ts-node index.ts --sync-db --logging --seeders --force",
-    "start:dev": "nodemon --exec npm start"
+    "start:dev": "nodemon --exec npm start",
+    "createDB": "docker run --name reverseProxyDB -e MYSQL_ROOT_PASSWORD=13731378 -e MYSQL_DATABASE=reverseProxy -d -p 3306:3306 mysql"
   },
-  "keywords": [],
+  "keywords": [
+    "reverse-proxy",
+    "proxy",
+    "reverse",
+    "authentication"
+  ],
   "license": "ISC",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",

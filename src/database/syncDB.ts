@@ -1,5 +1,6 @@
 import {seeder} from "./seeders";
 import {sequelize} from "./index";
+import {Config} from "../config";
 
 interface Flag {
     value: string;
@@ -27,8 +28,8 @@ const flags: Flag[] = [
 ];
 
 export const SyncDB = async () => {
-    if (process.argv.includes("--sync-db")) {
-        if (process.argv.includes("-h")) {
+    if (Config.syncDB.active) {
+        if (Config.syncDB.help) {
             for (let flag of flags) {
                 console.log(`- \`${flag.value}\` ${flag.intro}.\n`);
             }
@@ -36,17 +37,15 @@ export const SyncDB = async () => {
         }
 
         const options = {
-            force: process.argv.includes("--force"),
-            logging: process.argv.includes("--logging"),
+            force: Config.syncDB.force,
+            logging: Config.syncDB.logging,
             alter: true,
         };
-        const seeders = process.argv.includes("--seeders");
 
         try {
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$")
             await sequelize.sync(options);
             console.log("✅ Database schema updated!");
-            if (seeders) {
+            if (Config.syncDB.seeders) {
                 await seeder();
                 console.log("✅ Database seed completed!");
             }

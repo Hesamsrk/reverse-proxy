@@ -3,4 +3,5 @@ export interface ServiceConfigs {
     hostname: string,
     protocol: "http" | "https"
     port?: number,
+    authentication:boolean
 }
